@@ -1,0 +1,7 @@
+[user]
+	name = elianortega
+	email = elian.mortega@gmail.com
+[core]
+	editor = vi
+[init]
+	defaultBranch = main

@@ -5,3 +5,5 @@
 	editor = vi
 [init]
 	defaultBranch = main
+[push]
+  autoSetupRemote = true

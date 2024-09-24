@@ -36,6 +36,12 @@ PATH=$PATH:$DART_HOME/bin:$PATH
 PATH=$PATH:~/.pub-cache/bin:$PATH
 
 # ----------------------
+# Ruby - Need to make sure that use the Homebrew Ruby, not the system one
+# Very Good Flutter Setup
+# ----------------------
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# ----------------------
 # Flutter Android
 # ----------------------
 export ANDROID_HOME=~/Library/Android/sdk

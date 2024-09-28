@@ -31,6 +31,9 @@ alias oipa="open build/ios/ipa"
 # ----------------------
 # Export Flutter
 # ----------------------
+export FLUTTER_HOME=~/fvm/default
+PATH=$PATH:$FLUTTER_HOME/bin:$PATH
+
 export DART_HOME=~/fvm/default/bin/cache/dart-sdk
 PATH=$PATH:$DART_HOME/bin:$PATH
 PATH=$PATH:~/.pub-cache/bin:$PATH
@@ -56,6 +59,12 @@ PATH=$PATH:$ANDROID_HOME/tools/bin/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# ----------------------
+# OpenJDK Installation
+# ----------------------
+PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 # ----------------------
 # Start starship.rs

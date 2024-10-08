@@ -1,8 +1,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
-CASE_SENSITIVE="true"
-ENABLE_CORRECTION="true"
+# CASE_SENSITIVE="true"
+# ENABLE_CORRECTION="true"
 
 plugins=(
     git
@@ -15,6 +15,7 @@ source $ZSH/oh-my-zsh.sh
 # Git Aliases
 # ----------------------
 alias gitclean="git for-each-ref --format '%(refname:short)' refs/heads | grep -v \"master\\|main\\|develop\" | xargs git branch -D"
+alias cz="cz commit"
 
 # ----------------------
 # Flutter Aliases
@@ -39,12 +40,6 @@ PATH=$PATH:$DART_HOME/bin:$PATH
 PATH=$PATH:~/.pub-cache/bin:$PATH
 
 # ----------------------
-# Ruby - Need to make sure that use the Homebrew Ruby, not the system one
-# Very Good Flutter Setup
-# ----------------------
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-
-# ----------------------
 # Flutter Android
 # ----------------------
 export ANDROID_HOME=~/Library/Android/sdk
@@ -65,6 +60,12 @@ export NVM_DIR="$HOME/.nvm"
 # ----------------------
 PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+
+# ----------------------
+# Ruby - Need to make sure that use the Homebrew Ruby, not the system one
+# Very Good Flutter Setup
+# ----------------------
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # ----------------------
 # Start starship.rs

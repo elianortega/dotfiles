@@ -6,3 +6,5 @@ for dotfile in $(echo ${DOTFILES[*]});
 do
     cp ~/dotfiles/$(echo $dotfile) ~/$(echo $dotfile)
 done
+
+cp ~/dotfiles/starship.toml ~/.config/starship.toml

@@ -16,6 +16,7 @@ source $ZSH/oh-my-zsh.sh
 # ----------------------
 alias gitclean="git for-each-ref --format '%(refname:short)' refs/heads | grep -v \"master\\|main\\|develop\" | xargs git branch -D"
 alias cz="cz commit"
+alias lzg="lazygit"
 
 # ----------------------
 # Flutter Aliases
@@ -24,6 +25,7 @@ alias flutter="fvm flutter"
 alias pg="flutter pub get"
 alias fcpg="flutter clean && flutter pub get"
 alias vpg="very_good packages get -r"
+alias fbr="flutter pub run build_runner build --delete-conflicting-outputs"
 
 alias oapk="open build/app/outputs/flutter-apk"
 alias oappbundle="open build/app/outputs/bundle"

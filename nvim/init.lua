@@ -10,6 +10,9 @@ vim.cmd('nmap <leader>c :e ~/.config/nvim/init.lua<cr>')
 -- save
 vim.cmd('nmap <leader>s :w<cr>')
 
+-- close buffer
+vim.cmd('nmap <leader>q :q<cr>')
+
 -- yank line
 vim.cmd('nmap Y yy')
 

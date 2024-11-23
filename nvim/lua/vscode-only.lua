@@ -1,9 +1,6 @@
 local vscode = require('vscode')
 
 
-vim.keymap.set({"n"}, "<leader>q", function()
-  vscode.action("workbench.action.closeActiveEditor")
-end)
 
 vim.keymap.set({"n"}, "<leader>v", function()
   vscode.action("workbench.action.splitEditor")
@@ -20,7 +17,7 @@ vim.keymap.set({"n"}, "<leader>l", function()
 end)
 
 -- Trigger quick actions menu
-vim.keymap.set({"n"}, "gq", function()
+vim.keymap.set({"n"}, "<leader>w", function()
   vscode.action("editor.action.quickFix")
 end)
 

@@ -55,6 +55,10 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 -- Move selected lines up in visual mode with Shift-K
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
+
+-- Easymotion look for 2 characters with s
+vim.api.nvim_set_keymap('n', 's', '<Plug>(easymotion-overwin-f2)', { noremap = false, silent = true })
+
 if vim.g.vscode then
     -- VSCode extension
   require('vscode-only')

@@ -10,4 +10,8 @@ return require('packer').startup(function(use)
   -- vim surround
   use 'tpope/vim-surround'
   
+  -- vim-easymotion
+  use 'easymotion/vim-easymotion'
+
+  
 end)

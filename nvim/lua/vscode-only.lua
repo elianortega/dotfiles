@@ -28,3 +28,13 @@ end)
 vim.keymap.set({"n"}, "<leader>r", function()
   vscode.action("editor.action.rename")
 end)
+
+-- Navigate between tabs
+vim.keymap.set({"n"}, "L", function()
+  vscode.action("workbench.action.nextEditor")
+end)
+
+-- Navigate between tabs
+vim.keymap.set({"n"}, "H", function()
+  vscode.action("workbench.action.previousEditor")
+end)

@@ -1,6 +1,10 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+[directory]
+truncation_length = 1
+truncation_symbol = './'
+
 [gcloud]
 format = '[$symbol$account]($style)'
 disabled = true

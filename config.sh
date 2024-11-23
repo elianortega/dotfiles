@@ -8,3 +8,5 @@ do
 done
 
 cp ~/dotfiles/starship.toml ~/.config/starship.toml
+
+cp -r ~/dotfiles/nvim ~/.config/

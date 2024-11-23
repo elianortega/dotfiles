@@ -1,7 +1,5 @@
 local vscode = require('vscode')
 
-
-
 vim.keymap.set({"n"}, "<leader>v", function()
   vscode.action("workbench.action.splitEditor")
 end)
@@ -24,4 +22,9 @@ end)
 -- Format the whole document
 vim.keymap.set({"n"}, "<leader>f", function()
   vscode.action("editor.action.formatDocument")
+end)
+
+-- Rename symbol
+vim.keymap.set({"n"}, "<leader>r", function()
+  vscode.action("editor.action.rename")
 end)

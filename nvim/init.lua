@@ -42,10 +42,13 @@ vim.keymap.set('n', 'J', '5j')
 -- remap K to 5k
 vim.keymap.set('n', 'K', '5k')
 
--- NAVIGATION
+-- Keep visual mode active after indenting
+vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true })
+vim.keymap.set('v', '<', '<gv', { noremap = true, silent = true })
 
 if vim.g.vscode then
     -- VSCode extension
+  require('vscode-only')
     
 else
     -- ordinary Neovim

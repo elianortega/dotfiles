@@ -60,7 +60,7 @@ if vim.g.vscode then
     -- VSCode extension
   require('vscode-only')
   -- Lazy plugins
-  require('nvim.lua.lazy')
+  require('lazy-plugins')
     
 else
     -- ordinary Neovim

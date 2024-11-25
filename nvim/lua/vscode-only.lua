@@ -38,3 +38,8 @@ end)
 vim.keymap.set({"n"}, "H", function()
   vscode.action("workbench.action.previousEditor")
 end)
+
+-- Go to references 
+vim.keymap.set({"n"}, "gr", function()
+  vscode.action("editor.action.goToReferences")
+end)

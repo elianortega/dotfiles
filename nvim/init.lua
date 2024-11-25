@@ -1,9 +1,6 @@
 -- <leader> key
 vim.g.mapleader = ' '
-
--- Install plugins
-require('plugins')
-
+ 
 -- open config
 vim.cmd('nmap <leader>c :e ~/dotfiles/nvim/init.lua<cr>')
 
@@ -62,6 +59,8 @@ vim.api.nvim_set_keymap('n', 's', '<Plug>(easymotion-overwin-f2)', { noremap = f
 if vim.g.vscode then
     -- VSCode extension
   require('vscode-only')
+  -- Lazy plugins
+  require('nvim.lua.lazy')
     
 else
     -- ordinary Neovim

@@ -217,11 +217,6 @@
     "command": "workbench.action.toggleMaximizedPanel"
   },
   {
-    "key": "Escape",
-    "command": "workbench.action.terminal.toggleTerminal",
-    "when": "terminalFocus"
-  },
-  {
     "key": "cmd+n",
     "command": "workbench.action.terminal.new",
     "when": "terminalFocus"
@@ -301,5 +296,27 @@
     "key": "cmd+i",
     "command": "-inlineChat.start",
     "when": "editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "workbench.action.reloadWindow"
+  },
+  {
+    "args": "<C-d>",
+    "command": "vscode-neovim.send",
+    "key": "cmd+d",
+    "when": "editorFocus && neovim.init"
+  },
+  {
+    "args": "<CS-d>",
+    "command": "vscode-neovim.send",
+    "key": "cmd+shift+d",
+    "when": "editorFocus && neovim.init"
+  },
+  {
+    "args": "<CS-l>",
+    "command": "vscode-neovim.send",
+    "key": "cmd+shift+l",
+    "when": "editorFocus && neovim.init"
   }
 ]

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Stolen from Robert Brunhage
+
+tmux-windowizer flutter-test
+
+file_location=$1
+tmux-windowizer flutter-test "flutter test ${file_location}"

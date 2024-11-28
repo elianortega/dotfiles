@@ -11,6 +11,13 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+
+# ----------------------
+# Add Scripts to path
+# ----------------------
+export PATH=$PATH:~/.local/scripts
+bindkey -s ^f "tmux-sessionizer\n"
+
 # ----------------------
 # Git Aliases
 # ----------------------

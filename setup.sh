@@ -1,11 +1,20 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# cd .dotfiles-personal
-# stow --restow -t ~ git
-# cd ..
+personal_folders=("git")
+cd .dotfiles-personal
+for folder in "${personal_folders[@]}"; do
+  echo "Stowing .dotfiles-personal/$folder..."
+  stow --restow -t ~ "$folder"
+done
+cd ..
 
-stow --restow -t ~ bin
-stow --restow -t ~ nvim
-stow --restow -t ~ tmux
-stow --restow -t ~ zsh
+# Define the list of folders to stow
+folders=("bin" "nvim" "tmux" "zsh")
 
+# Loop through each folder and run stow
+for folder in "${folders[@]}"; do
+  echo "Stowing $folder..."
+  stow --restow -t ~ "$folder"
+done
+
+echo "All folders have been stowed!"

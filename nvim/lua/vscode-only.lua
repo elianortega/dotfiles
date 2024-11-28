@@ -43,3 +43,8 @@ end)
 vim.keymap.set({"n"}, "gr", function()
   vscode.action("editor.action.goToReferences")
 end)
+
+-- Go to implementation 
+vim.keymap.set({"n"}, "gi", function()
+  vscode.action("editor.action.peekImplementation")
+end)

@@ -5,19 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
-
-# ZSH_THEME="robbyrussell"
-# CASE_SENSITIVE="true"
-# ENABLE_CORRECTION="true"
-
-plugins=(
-    git
-)
-
-source $ZSH/oh-my-zsh.sh
-
-
 # ----------------------
 # Add Scripts to path
 # ----------------------
@@ -30,6 +17,11 @@ bindkey -s ^f "tmux-sessionizer\n"
 alias gitclean="git for-each-ref --format '%(refname:short)' refs/heads | grep -v \"master\\|main\\|develop\" | xargs git branch -D"
 alias cz="cz commit"
 alias lzg="lazygit"
+alias gco="git checkout" 
+alias gcb="git checkout -b" 
+alias gaa="git add --all" 
+alias gl="git pull"
+alias gp="git push"
 
 # ----------------------
 # Flutter Aliases
@@ -82,10 +74,6 @@ CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 # ----------------------
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 
-# ----------------------
-# Start starship.rs
-# ----------------------
-# eval "$(starship init zsh)"
 
 # ----------------------
 # Power Level 10k setup

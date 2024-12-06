@@ -22,6 +22,7 @@ alias gcb="git checkout -b"
 alias gaa="git add --all" 
 alias gl="git pull"
 alias gp="git push"
+alias ..="cd .."
 
 # ----------------------
 # Flutter Aliases

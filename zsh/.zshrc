@@ -16,7 +16,7 @@ bindkey -s ^f "tmux-sessionizer\n"
 # ----------------------
 alias gitclean="git for-each-ref --format '%(refname:short)' refs/heads | grep -v \"master\\|main\\|develop\" | xargs git branch -D"
 alias cz="cz commit"
-alias lzg="lazygit"
+alias lg="lazygit"
 alias gco="git checkout" 
 alias gcb="git checkout -b" 
 alias gaa="git add --all" 

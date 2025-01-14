@@ -11,6 +11,20 @@ fi
 export PATH=$PATH:~/.local/scripts
 bindkey -s ^f "tmux-sessionizer\n"
 
+
+# ----------------------
+# Eza better ls
+# ----------------------
+alias ls="eza --icons=always"
+
+
+# ----------------------
+# Zoxide better cd
+# ----------------------
+eval "$(zoxide init zsh)"
+alias cd="z"
+
+
 # ----------------------
 # Git Aliases
 # ----------------------
@@ -106,3 +120,7 @@ setopt hist_verify
 # ----------------------
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"

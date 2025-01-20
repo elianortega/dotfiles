@@ -71,6 +71,18 @@ PATH=$PATH:$ANDROID_HOME/tools
 PATH=$PATH:$ANDROID_HOME/tools/bin/
 
 # ----------------------
+# Flutter NVIM
+# ----------------------
+# I want to use $@ for all arguments but they don't contain space for me
+function flutter-watch(){
+  tmux send-keys "flutter run $1 $2 $3 $4 $5 $6 --pid-file=/tmp/tf1.pid" Enter \;\
+  split-window -v \;\
+  send-keys 'npx -y nodemon -e dart -x "cat /tmp/tf1.pid | xargs kill -s USR1"' Enter \;\
+  resize-pane -y 5 -t 1 \;\
+  select-pane -t 0 \;
+}
+
+# ----------------------
 # NVM Installation
 # ----------------------
 export NVM_DIR="$HOME/.nvm"

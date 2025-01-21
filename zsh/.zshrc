@@ -9,7 +9,16 @@ fi
 # Add Scripts to path
 # ----------------------
 export PATH=$PATH:~/.local/scripts
-bindkey -s ^f "tmux-sessionizer\n"
+function T() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
 
 
 # ----------------------
@@ -62,6 +71,18 @@ PATH=$PATH:$DART_HOME/bin:$PATH
 PATH=$PATH:~/.pub-cache/bin:$PATH
 
 # ----------------------
+# Flutter NVIM
+# ----------------------
+# I want to use $@ for all arguments but they don't contain space for me
+function fw(){
+tmux send-keys "flutter run $1 $2 $3 $4 $5 $6 --pid-file=/tmp/tf1.pid" Enter \;\
+  split-window -v \;\
+  send-keys 'npx -y nodemon -e dart -x "cat /tmp/tf1.pid | xargs kill -s USR1"' Enter \;\
+  resize-pane -y 5 -t 1 \;\
+  select-pane -t 0 \;
+}
+
+# ----------------------
 # Flutter Android
 # ----------------------
 export ANDROID_HOME=~/Library/Android/sdk
@@ -70,17 +91,6 @@ PATH=$PATH:$ANDROID_HOME/platform-tools
 PATH=$PATH:$ANDROID_HOME/tools
 PATH=$PATH:$ANDROID_HOME/tools/bin/
 
-# ----------------------
-# Flutter NVIM
-# ----------------------
-# I want to use $@ for all arguments but they don't contain space for me
-function flutter-watch(){
-  tmux send-keys "flutter run $1 $2 $3 $4 $5 $6 --pid-file=/tmp/tf1.pid" Enter \;\
-  split-window -v \;\
-  send-keys 'npx -y nodemon -e dart -x "cat /tmp/tf1.pid | xargs kill -s USR1"' Enter \;\
-  resize-pane -y 5 -t 1 \;\
-  select-pane -t 0 \;
-}
 
 # ----------------------
 # NVM Installation

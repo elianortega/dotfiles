@@ -64,19 +64,21 @@ config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.90
 config.macos_window_background_blur = 10
 
--- config.mouse_bindings = {
--- 	-- CMD-click will open the link under the mouse cursor
--- 	{
--- 		event = { Up = { streak = 1, button = "Left" } },
--- 		mods = "SUPER",
--- 		action = wezterm.action.OpenLinkAtMouseCursor,
--- 	},
--- }
---
--- wezterm.on("open-uri", function(window, pane, uri)
--- 	wezterm.log_info(window)
--- 	wezterm.log_info(pane)
--- 	wezterm.log_info(uri)
--- end)
+config.keys = {
+	{ key = "s", mods = "CMD", action = wezterm.action.SendString("\x13\x54") }, -- Cmd+K sends Ctrl+S followed by S
+	{ key = "1", mods = "CMD", action = wezterm.action.SendString("\x131") }, -- Cmd+1 sends Ctrl+S followed by 1
+	{ key = "2", mods = "CMD", action = wezterm.action.SendString("\x132") }, -- Cmd+2 sends Ctrl+S followed by 2
+	{ key = "3", mods = "CMD", action = wezterm.action.SendString("\x133") }, -- Cmd+3 sends Ctrl+S followed by 3
+	{ key = "4", mods = "CMD", action = wezterm.action.SendString("\x134") }, -- Cmd+4 sends Ctrl+S followed by 4
+	{ key = "5", mods = "CMD", action = wezterm.action.SendString("\x135") }, -- Cmd+5 sends Ctrl+S followed by 5
+	{ key = "6", mods = "CMD", action = wezterm.action.SendString("\x136") }, -- Cmd+6 sends Ctrl+S followed by 6
+	{ key = "7", mods = "CMD", action = wezterm.action.SendString("\x137") }, -- Cmd+7 sends Ctrl+S followed by 7
+	{ key = "8", mods = "CMD", action = wezterm.action.SendString("\x138") }, -- Cmd+8 sends Ctrl+S followed by 8
+	{ key = "9", mods = "CMD", action = wezterm.action.SendString("\x139") }, -- Cmd+9 sends Ctrl+S followed by 9
+	{ key = "t", mods = "CMD", action = wezterm.action.SendString("\x13\x63") }, -- Cmd+T sends Ctrl+S followed by C
+	{ key = "l", mods = "CMD", action = wezterm.action.SendString("\x13\x4c") }, -- Cmd+L sends Ctrl+S followed by L
+	{ key = "h", mods = "CMD", action = wezterm.action.SendString("\x13\x48") }, -- Cmd+H sends Ctrl+S followed by H
+	{ key = "n", mods = "CMD", action = wezterm.action.SendString("\x13%") }, -- Cmd+N sends Ctrl+S followed by %
+}
 
 return config

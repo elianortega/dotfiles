@@ -59,6 +59,7 @@ alias fbr="flutter pub run build_runner build --delete-conflicting-outputs"
 alias oapk="open build/app/outputs/flutter-apk"
 alias oappbundle="open build/app/outputs/bundle"
 alias oipa="open build/ios/ipa"
+alias f10n="flutter gen-l10n"
 
 # ----------------------
 # Export Flutter
@@ -74,8 +75,9 @@ PATH=$PATH:~/.pub-cache/bin:$PATH
 # Flutter NVIM
 # ----------------------
 # I want to use $@ for all arguments but they don't contain space for me
+# I want to use $@ for all arguments but they don't contain space for me
 function fw(){
-tmux send-keys "flutter run $1 $2 $3 $4 $5 $6 --pid-file=/tmp/tf1.pid" Enter \;\
+  tmux send-keys "flutter run $1 $2 $3 $4 $5 $6 --pid-file=/tmp/tf1.pid" Enter \;\
   split-window -v \;\
   send-keys 'npx -y nodemon -e dart -x "cat /tmp/tf1.pid | xargs kill -s USR1"' Enter \;\
   resize-pane -y 5 -t 1 \;\

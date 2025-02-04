@@ -61,11 +61,13 @@ config.colors = {
 }
 
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.90
+config.window_background_opacity = 0.98
 config.macos_window_background_blur = 10
 
 config.keys = {
-	{ key = "s", mods = "CMD", action = wezterm.action.SendString("\x13\x54") }, -- Cmd+K sends Ctrl+S followed by S
+	-- { key = "s", mods = "CMD", action = wezterm.action.SendString("\x13\x54") }, -- Cmd+K sends Ctrl+S followed by S
+	-- New mapping for Ctrl + F (Ctrl + S followed by capital T)
+	{ key = "f", mods = "CTRL", action = wezterm.action.SendString("\x13\x54") }, -- Ctrl+F sends Ctrl+S followed by Ctrl+T
 	{ key = "1", mods = "CMD", action = wezterm.action.SendString("\x131") }, -- Cmd+1 sends Ctrl+S followed by 1
 	{ key = "2", mods = "CMD", action = wezterm.action.SendString("\x132") }, -- Cmd+2 sends Ctrl+S followed by 2
 	{ key = "3", mods = "CMD", action = wezterm.action.SendString("\x133") }, -- Cmd+3 sends Ctrl+S followed by 3
@@ -78,7 +80,7 @@ config.keys = {
 	{ key = "t", mods = "CMD", action = wezterm.action.SendString("\x13\x63") }, -- Cmd+T sends Ctrl+S followed by C
 	{ key = "l", mods = "CMD", action = wezterm.action.SendString("\x13\x4c") }, -- Cmd+L sends Ctrl+S followed by L
 	{ key = "h", mods = "CMD", action = wezterm.action.SendString("\x13\x48") }, -- Cmd+H sends Ctrl+S followed by H
-	{ key = "n", mods = "CMD", action = wezterm.action.SendString("\x13%") }, -- Cmd+N sends Ctrl+S followed by %
+	{ key = "n", mods = "CMD", action = wezterm.action.SendString("\x13\x03") }, -- Cmd+N sends Ctrl+S followed by Ctrl+C
 }
 
 return config

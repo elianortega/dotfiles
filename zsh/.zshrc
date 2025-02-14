@@ -20,6 +20,7 @@ function T() {
   }
 }
 
+alias n="nvim"
 
 # ----------------------
 # Eza better ls

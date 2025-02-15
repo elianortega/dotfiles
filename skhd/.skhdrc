@@ -1,4 +1,4 @@
 # App shortcuts
-alt - t : open -a 'WezTerm'
-alt - b : open -a 'Brave Browser'
-alt - s : open -a 'Slack'
+# alt - j : open -a 'Brave Browser'
+# alt - k : open -a 'WezTerm'
+# alt - l : open -a 'Slack'

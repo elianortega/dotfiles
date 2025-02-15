@@ -80,7 +80,7 @@ config.keys = {
 	{ key = "t", mods = "CMD", action = wezterm.action.SendString("\x13\x63") }, -- Cmd+T sends Ctrl+S followed by C
 	{ key = "l", mods = "CMD", action = wezterm.action.SendString("\x13\x4c") }, -- Cmd+L sends Ctrl+S followed by L
 	{ key = "h", mods = "CMD", action = wezterm.action.SendString("\x13\x48") }, -- Cmd+H sends Ctrl+S followed by H
-	{ key = "n", mods = "CMD", action = wezterm.action.SendString("\x13\x03") }, -- Cmd+N sends Ctrl+S followed by Ctrl+C
+	-- { key = "n", mods = "CMD", action = wezterm.action.SendString("\x13\x03") }, -- Cmd+N sends Ctrl+S followed by Ctrl+C
 }
 
 return config

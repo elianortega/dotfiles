@@ -17,4 +17,15 @@ for folder in "${folders[@]}"; do
   stow --restow -t ~ "$folder"
 done
 
+# Stow personal .config folders
+stow --restow --no-folding -v -t ~/.config config
+
+# config_folders=("aerospace")
+# cd config
+# for folder in "${config_folders[@]}"; do
+#   echo "Stowing .config/$folder..."
+#   stow --no-folding -v -t ~/.config "$folder"
+# done
+# cd ..
+
 echo "All folders have been stowed!"

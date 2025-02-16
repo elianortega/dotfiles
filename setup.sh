@@ -9,7 +9,7 @@ done
 cd ..
 
 # Define the list of folders to stow
-folders=("wezterm" "bin" "nvim" "skhd"  "tmux" "zsh")
+folders=("wezterm" "bin" "nvim" "skhd" "zsh")
 
 # Loop through each folder and run stow
 for folder in "${folders[@]}"; do
@@ -20,7 +20,7 @@ done
 # Stow personal .config folders
 stow --restow --no-folding -v -t ~/.config config
 
-# config_folders=("aerospace")
+# config_folders=("aerospace tmux")
 # cd config
 # for folder in "${config_folders[@]}"; do
 #   echo "Stowing .config/$folder..."

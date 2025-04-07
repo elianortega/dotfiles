@@ -57,9 +57,11 @@ alias ..="cd .."
 # Flutter Aliases
 # ----------------------
 alias flutter="fvm flutter"
+alias dart="fvm dart"
 alias pg="flutter pub get"
 alias fcpg="flutter clean && flutter pub get"
 alias vpg="very_good packages get -r"
+alias vgt="very_good test"
 alias fbr="flutter pub run build_runner build --delete-conflicting-outputs"
 
 alias oapk="open build/app/outputs/flutter-apk"
@@ -73,8 +75,8 @@ alias f10n="flutter gen-l10n"
 export FLUTTER_HOME=~/fvm/default
 PATH=$PATH:$FLUTTER_HOME/bin:$PATH
 
-export DART_HOME=~/fvm/default/bin/cache/dart-sdk
-PATH=$PATH:$DART_HOME/bin:$PATH
+# export DART_HOME=~/fvm/default/bin/cache/dart-sdk
+# PATH=$PATH:$DART_HOME/bin:$PATH
 PATH=$PATH:~/.pub-cache/bin:$PATH
 
 # ----------------------
@@ -167,3 +169,19 @@ eval "$(pyenv init -)"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

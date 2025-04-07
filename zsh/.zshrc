@@ -153,9 +153,9 @@ setopt hist_verify
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 
 # ----------------------
@@ -185,3 +185,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+## --- Export OP
+# if [[ -z "$OPENAI_API_KEY" ]]; then
+#   export OPENAI_API_KEY=$(op read op://Private/chatgpt.nvim/password)
+# fi

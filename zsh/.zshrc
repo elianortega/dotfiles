@@ -159,6 +159,11 @@ bindkey '^[[B' history-search-forward
 
 
 # ----------------------
+# Protocol Buffers
+# ----------------------
+export PATH="/opt/homebrew/opt/protobuf@3/bin:$PATH"
+
+# ----------------------
 # OH MY ZSH
 # ----------------------
 # Which plugins would you like to load?
@@ -172,21 +177,28 @@ source $ZSH/oh-my-zsh.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/opt/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/opt/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
 
-## --- Export OP
+# --- Export OP
 # if [[ -z "$OPENAI_API_KEY" ]]; then
-#   export OPENAI_API_KEY=$(op read op://Private/chatgpt.nvim/password)
+  # export OPENAI_API_KEY=$(op read op://Private/chatgpt.nvim/password)
 # fi
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/elianortega/.dart-cli-completion/zsh-config.zsh ]] && . /Users/elianortega/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+export PATH="/Users/elianortega/.shorebird/bin:$PATH"

@@ -26,6 +26,7 @@ function T() {
 # TMUX NVIM ALIASES
 # ----------------------
 alias n="nvim"
+alias c="cursor"
 
 # ----------------------
 # Eza better ls
@@ -61,7 +62,7 @@ alias dart="fvm dart"
 alias pg="flutter pub get"
 alias fcpg="flutter clean && flutter pub get"
 alias vpg="very_good packages get -r"
-alias vgt="very_good test"
+alias vgt='very_good test -j 4 --optimization --coverage --exclude-coverage "lib/generated/**" --test-randomize-ordering-seed random'
 alias fbr="flutter pub run build_runner build --delete-conflicting-outputs"
 
 alias oapk="open build/app/outputs/flutter-apk"
@@ -164,6 +165,11 @@ bindkey '^[[B' history-search-forward
 export PATH="/opt/homebrew/opt/protobuf@3/bin:$PATH"
 
 # ----------------------
+# RUST
+# ----------------------
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
+
+# ----------------------
 # OH MY ZSH
 # ----------------------
 # Which plugins would you like to load?
@@ -175,30 +181,14 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-#         . "/opt/anaconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/opt/anaconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# <<< conda initialize <<<
-
-
-# --- Export OP
-# if [[ -z "$OPENAI_API_KEY" ]]; then
-  # export OPENAI_API_KEY=$(op read op://Private/chatgpt.nvim/password)
-# fi
-
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/elianortega/.dart-cli-completion/zsh-config.zsh ]] && . /Users/elianortega/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
 export PATH="/Users/elianortega/.shorebird/bin:$PATH"
+
+# Work Aliases
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"

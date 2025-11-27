@@ -1,0 +1,10 @@
+# Add your --cask apps here, one per line
+# Example:
+# google-chrome
+# slack
+# spotify
+
+
+
+
+

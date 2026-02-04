@@ -9,7 +9,7 @@ done
 cd ..
 
 # Define the list of folders to stow
-folders=("wezterm" "bin" "nvim" "skhd" "zsh")
+folders=("wezterm" "bin" "nvim" "skhd" "zsh" "claude")
 
 # Loop through each folder and run stow
 for folder in "${folders[@]}"; do

@@ -11,14 +11,15 @@ fi
 # Add Scripts to path
 # ----------------------
 export PATH=$PATH:~/.local/scripts
+
 function T() {
   {
     exec </dev/tty
     exec <&1
     local session
-    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    session=$(sesh list --icons | fzf --height 40% --reverse --ansi --border-label ' sesh ' --border --prompt '⚡  ')
     [[ -z "$session" ]] && return
-    sesh connect $session
+    sesh connect "$session"
   }
 }
 

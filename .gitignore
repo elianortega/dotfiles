@@ -1,2 +1,7 @@
 node_modules/
 .DS_Store
+
+# Cursor user-specific data
+cursor/User/History/
+cursor/User/globalStorage/
+cursor/User/workspaceStorage/

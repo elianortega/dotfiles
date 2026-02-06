@@ -57,3 +57,26 @@ Located in `~/.claude/agents/`:
 
 - **Primary**: Flutter / Dart, Typescript
 - **Editor**: Cursor
+
+---
+
+## Tools
+
+Preferred CLI tools for common tasks:
+
+| Task | Tool | Notes |
+|------|------|-------|
+| GitHub (PRs, issues, checks, releases) | `gh` | Always use `gh` CLI, never browser scraping |
+| File search | `ripgrep` (`rg`) | Faster than grep |
+| Fuzzy finding | `fzf` | Pipe into fzf for interactive selection |
+
+### `gh` Quick Reference
+
+```
+gh pr list / gh pr view <number>
+gh pr create --title "..." --body "..."
+gh pr comment <number> --body "..."
+gh api repos/{owner}/{repo}/pulls/<number>/comments
+gh issue list / gh issue view <number>
+gh pr checks <number>
+```

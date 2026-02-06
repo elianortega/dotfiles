@@ -1,0 +1,8 @@
+1password
+wezterm
+cursor
+brave-browser
+slack
+spotify
+whatsapp
+font-meslo-lg-nerd-font

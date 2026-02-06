@@ -1,0 +1,21 @@
+# Core
+stow
+neovim
+
+# Terminal
+tmux
+fzf
+fd
+joshmedeski/sesh/sesh
+ripgrep
+eza
+zoxide
+lazygit
+
+# GitHub
+gh
+
+# Shell
+powerlevel10k
+zsh-autosuggestions
+zsh-syntax-highlighting

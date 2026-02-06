@@ -22,24 +22,19 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 4. Install stow (required for dotfiles):
 ```bash
 brew install stow
-brew install font-meslo-lg-nerd-font
 ```
 
-5. Install 1Password:
-```bash
-brew install --cask 1password
-```
-
-6. Clone repo and setup:
+5. Clone repo and setup:
 ```bash
 git clone <repo-url> ~/dotfiles
 cd ~/dotfiles
 ./setup.sh
 ```
 
-7. Install all casks:
+6. Install all packages:
 ```bash
-xargs brew install --cask < casks.txt
+grep -v '^#' brew/formulas.txt | xargs brew install
+xargs brew install --cask < brew/casks.txt
 ```
 
 **Note:** `setup.sh` uses `stow` to create symlinks (not copies), so your config files stay in the repo and are cleanly linked to your home directory.
@@ -55,14 +50,6 @@ cd ~/dotfiles
 git submodule update --init --recursive
 ```
 
-### Tmux Dependencies
-
-Install required tools for tmux session management:
-
-```bash
-brew install tmux fzf fd joshmedeski/sesh/sesh
-```
-
 ### Tmux Plugin Manager (TPM)
 
 Install TPM to enable tmux plugins:
@@ -74,12 +61,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 Then start tmux and press `Ctrl+s I` (capital I) to install plugins.
 
 ### Neovim
-
-Install required dependencies (ripgrep is used by telescope for file/text searching):
-
-```bash
-brew install ripgrep
-```
 
 On first launch, neovim will auto-install plugins via lazy.nvim. Just run:
 

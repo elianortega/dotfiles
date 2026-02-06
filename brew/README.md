@@ -15,7 +15,6 @@
 | zoxide | Smarter `cd` with directory history |
 | lazygit | Terminal UI for git |
 | gh | GitHub CLI |
-| powerlevel10k | Zsh prompt theme |
 | zsh-autosuggestions | Fish-like autosuggestions for zsh |
 | zsh-syntax-highlighting | Syntax highlighting for zsh commands |
 

@@ -16,6 +16,5 @@ lazygit
 gh
 
 # Shell
-powerlevel10k
 zsh-autosuggestions
 zsh-syntax-highlighting

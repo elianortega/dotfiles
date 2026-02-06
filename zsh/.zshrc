@@ -1,27 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # ----------------------
 # Add Scripts to path
 # ----------------------
 export PATH=$PATH:~/.local/scripts
-
-function T() {
-  {
-    exec </dev/tty
-    exec <&1
-    local session
-    session=$(sesh list --icons | fzf --height 40% --reverse --ansi --border-label ' sesh ' --border --prompt '⚡  ')
-    [[ -z "$session" ]] && return
-    sesh connect "$session"
-  }
-}
 
 # ----------------------
 # TMUX NVIM ALIASES
@@ -125,14 +107,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 
 # ----------------------
-# Power Level 10k setup
-# ----------------------
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# ----------------------
 # Autossugestions
 # ----------------------
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -154,11 +128,6 @@ setopt hist_verify
 # ----------------------
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
-
-# export PYENV_ROOT="$HOME/.pyenv"
-# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
-
 
 # ----------------------
 # Protocol Buffers

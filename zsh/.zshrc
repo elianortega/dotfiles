@@ -1,6 +1,11 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 # ----------------------
+# Homebrew (Apple Silicon)
+# ----------------------
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ----------------------
 # Add Scripts to path
 # ----------------------
 export PATH=$PATH:~/.local/scripts
@@ -142,14 +147,13 @@ export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
 # ----------------------
 # OH MY ZSH
 # ----------------------
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
-
 source $ZSH/oh-my-zsh.sh
+
+# ----------------------
+# Starship Prompt
+# ----------------------
+eval "$(starship init zsh)"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall

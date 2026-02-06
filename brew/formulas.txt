@@ -18,3 +18,4 @@ gh
 # Shell
 zsh-autosuggestions
 zsh-syntax-highlighting
+starship

@@ -1,0 +1,76 @@
+# Minimal, useful prompt
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Clean two-line format
+format = """
+$directory$git_branch$git_status
+$nodejs$dart$package$character"""
+
+# Directory - show last 2 folders
+[directory]
+truncation_length = 2
+truncate_to_repo = false
+style = "bold cyan"
+
+# Git branch - simple
+[git_branch]
+format = "[$branch]($style) "
+style = "bold purple"
+
+# Git status - clear counts
+[git_status]
+format = '([$all_status$ahead_behind]($style))'
+style = "bold yellow"
+ahead = "[↑$count](bold green) "
+behind = "[↓$count](bold red) "
+diverged = "[↑$ahead_count](bold green)[↓$behind_count](bold red) "
+conflicted = "[!$count](bold red) "
+untracked = ""
+stashed = ""
+modified = "[~$count](bold yellow) "
+staged = "[+$count](bold green) "
+deleted = "[-$count](bold red) "
+
+# Prompt character
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+# Node.js
+[nodejs]
+format = "[$symbol$version]($style) "
+symbol = "node "
+style = "bold green"
+detect_files = ["package.json", ".nvmrc"]
+
+# Dart/Flutter
+[dart]
+format = "[$symbol$version]($style) "
+symbol = "dart "
+style = "bold blue"
+detect_files = ["pubspec.yaml"]
+
+# Package version
+[package]
+format = "[$symbol$version]($style) "
+symbol = ""
+style = "bold 208"
+
+# Disable the rest
+[cmd_duration]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[aws]
+disabled = true

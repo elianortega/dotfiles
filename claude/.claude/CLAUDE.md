@@ -33,6 +33,30 @@ Located in `~/.claude/agents/`:
 
 ---
 
+## Skills
+
+Located in `~/.claude/skills/`:
+
+| Skill                              | Purpose                                          |
+| ---------------------------------- | ------------------------------------------------ |
+| humanizer                          | Remove signs of AI-generated writing from text   |
+| supabase-postgres-best-practices   | Postgres optimization and best practices         |
+
+---
+
+## Slash Commands
+
+Located in `~/.claude/commands/`:
+
+| Command       | Purpose                                            |
+| ------------- | -------------------------------------------------- |
+| skill-i       | Install a skill into the current project           |
+| skill-i-g     | Install a skill globally (dotfiles, git-tracked)   |
+| skill-d       | Remove a skill from the current project            |
+| skill-d-g     | Remove a skill from dotfiles (globally tracked)    |
+
+---
+
 ## Personal Preferences
 
 ### Privacy

@@ -93,7 +93,7 @@ Preferred CLI tools for common tasks:
 | GitHub (PRs, issues, checks, releases) | `gh` | Always use `gh` CLI, never browser scraping |
 | File search | `ripgrep` (`rg`) | Faster than grep |
 | Fuzzy finding | `fzf` | Pipe into fzf for interactive selection |
-| Directory navigation | `zoxide` | `cd` is aliased to `z` (zoxide); `cdd` is aliased to the real `cd`. Always use `cdd` when navigating directories in Bash commands |
+| Directory navigation | `zoxide` | Use `z` for zoxide smart navigation; use `cd` for normal directory changes |
 
 ### `gh` Quick Reference
 

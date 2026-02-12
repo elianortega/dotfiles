@@ -5,3 +5,6 @@ node_modules/
 cursor/User/History/
 cursor/User/globalStorage/
 cursor/User/workspaceStorage/
+
+# Private skills (not for public repo)
+claude/.claude/skills/presales-tech-proposal/

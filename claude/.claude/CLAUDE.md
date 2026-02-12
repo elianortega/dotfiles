@@ -41,7 +41,6 @@ Located in `~/.claude/skills/`:
 | ---------------------------------- | ------------------------------------------------ |
 | humanizer                          | Remove signs of AI-generated writing from text   |
 | supabase-postgres-best-practices   | Postgres optimization and best practices         |
-| presales-tech-proposal             | Generate pre-sales technical & product proposals |
 
 ---
 

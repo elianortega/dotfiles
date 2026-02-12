@@ -41,6 +41,7 @@ Located in `~/.claude/skills/`:
 | ---------------------------------- | ------------------------------------------------ |
 | humanizer                          | Remove signs of AI-generated writing from text   |
 | supabase-postgres-best-practices   | Postgres optimization and best practices         |
+| presales-tech-proposal             | Generate pre-sales technical & product proposals |
 
 ---
 
@@ -93,6 +94,7 @@ Preferred CLI tools for common tasks:
 | GitHub (PRs, issues, checks, releases) | `gh` | Always use `gh` CLI, never browser scraping |
 | File search | `ripgrep` (`rg`) | Faster than grep |
 | Fuzzy finding | `fzf` | Pipe into fzf for interactive selection |
+| Directory navigation | `zoxide` | `cd` is aliased to `z` (zoxide). Use `cd` normally; it uses zoxide under the hood |
 
 ### `gh` Quick Reference
 

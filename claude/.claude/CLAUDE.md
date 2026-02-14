@@ -41,6 +41,7 @@ Located in `~/.claude/skills/`:
 | ---------------------------------- | ------------------------------------------------ |
 | humanizer                          | Remove signs of AI-generated writing from text   |
 | supabase-postgres-best-practices   | Postgres optimization and best practices         |
+| flutter-dart-skill                 | Flutter/Dart architecture, practices, and testing |
 
 ---
 
@@ -68,6 +69,14 @@ Located in `~/.claude/commands/`:
 
 - No emojis in code, comments, or documentation
 - Many small files over few large files
+
+### Flutter / Dart
+
+- When writing or reviewing Flutter/Dart code, validate against `flutter-dart-skill` rules
+- Follow layered architecture: presentation, business logic, data
+- Use BLoC/Cubit for state management
+- Prefer standalone widgets over helper methods
+- Use barrel files for exports
 
 ### Git
 

@@ -1,13 +1,8 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
-  },
   "permissions": {
     "allow": [
       "WebSearch",
       "WebFetch",
-
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
@@ -26,17 +21,13 @@
       "Bash(git cherry-pick:*)",
       "Bash(git tag:*)",
       "Bash(git remote:*)",
-
       "Bash(flutter:*)",
       "Bash(dart:*)",
-
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(pnpm:*)",
       "Bash(node:*)",
-
       "Bash(brew:*)",
-
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(cp:*)",
@@ -53,8 +44,12 @@
       "Bash(stow:*)",
       "Bash(ln:*)",
       "Bash(readlink:*)",
-
       "Bash(gh:*)"
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
+  "skipDangerousModePermissionPrompt": true
 }

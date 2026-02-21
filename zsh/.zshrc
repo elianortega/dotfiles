@@ -8,7 +8,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # ----------------------
 # Add Scripts to path
 # ----------------------
-export PATH=$PATH:~/.local/scripts
+export PATH="$HOME/.local/bin:$PATH:$HOME/.local/scripts"
 
 # ----------------------
 # TMUX NVIM ALIASES

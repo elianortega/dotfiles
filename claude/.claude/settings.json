@@ -51,5 +51,17 @@
     "type": "command",
     "command": "bash ~/.claude/statusline.sh"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/elianortega/.claude/hooks/gsd-check-update.js\""
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -81,6 +81,8 @@ config.keys = {
 	{ key = "l", mods = "CMD", action = wezterm.action.SendString("\x13\x4c") }, -- Cmd+L sends Ctrl+S followed by L
 	{ key = "h", mods = "CMD", action = wezterm.action.SendString("\x13\x48") }, -- Cmd+H sends Ctrl+S followed by H
 	-- { key = "n", mods = "CMD", action = wezterm.action.SendString("\x13\x03") }, -- Cmd+N sends Ctrl+S followed by Ctrl+C
+	{ key = "LeftArrow", mods = "CMD", action = wezterm.action.SendString("\x01") }, -- Cmd+Left → beginning of line (Ctrl+A)
+	{ key = "RightArrow", mods = "CMD", action = wezterm.action.SendString("\x05") }, -- Cmd+Right → end of line (Ctrl+E)
 }
 
 return config

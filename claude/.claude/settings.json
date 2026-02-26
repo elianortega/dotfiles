@@ -47,11 +47,6 @@
       "Bash(gh:*)"
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
-  },
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "SessionStart": [
       {
@@ -62,6 +57,24 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/elianortega/.claude/hooks/gsd-context-monitor.js\""
+          }
+        ]
+      }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "supabase@claude-plugins-official": true
   }
 }

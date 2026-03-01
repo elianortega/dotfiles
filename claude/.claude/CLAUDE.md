@@ -42,6 +42,7 @@ Located in `~/.claude/skills/`:
 | `flutter-dart-skill` | Flutter/Dart layered architecture, BLoC state management, testing, UI patterns, and code style | When writing, reviewing, or architecting any Flutter/Dart code | Custom (built from VGV Engineering practices) |
 | `react-best-practices` | React/Next.js performance optimization -- waterfalls, bundle size, RSC, re-renders, Server Actions (by Vercel Engineering) | When writing, reviewing, or optimizing any React/Next.js code | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) |
 | `nestjs-best-practices` | NestJS architecture, DI, security, performance, testing, DB/ORM, API design, and microservices patterns | When writing, reviewing, or architecting any NestJS backend code | [Kadajett/agent-nestjs-skills](https://github.com/Kadajett/agent-nestjs-skills) |
+| `ui-ux-pro-max` | UI/UX design intelligence -- 50+ styles, 97 color palettes, 57 font pairings, charts, 9 tech stacks | When designing, building, or reviewing UI/UX for web or mobile apps | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
 
 ---
 

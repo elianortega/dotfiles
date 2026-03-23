@@ -8,3 +8,8 @@ cursor/User/workspaceStorage/
 
 # Private skills (not for public repo)
 claude/.claude/skills/presales-tech-proposal/
+claude/.claude/skills/presales-proposal-writer/
+claude/.claude/skills/nav-migration/
+claude/.claude/skills/nav-migration-simple/
+claude/.claude/skills/nav-migration-test/
+claude/.claude/skills/test-skill/

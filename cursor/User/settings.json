@@ -104,7 +104,7 @@
   "workbench.activityBar.orientation": "vertical",
   "git.confirmSync": false,
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "diffEditor.ignoreTrimWhitespace": false,
   "dart.debugExternalPackageLibraries": true,

@@ -3,25 +3,52 @@
 # Read JSON input from stdin
 input=$(cat)
 
-# ANSI color codes (dimmed for status line display)
+# ANSI color codes
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
 RED='\033[0;31m'
+DIM='\033[2m'
 RESET='\033[0m'
 
-# Extract values using jq
-model=$(echo "$input" | jq -r '.model.display_name // "Claude"')
+# -- Directory --
 current_dir=$(echo "$input" | jq -r '.workspace.current_dir // ""')
 dir_name=$(basename "$current_dir")
 
-# Context window percentage
+# -- Model (short) --
+# Extract short name (e.g. "Opus") and version from model id (e.g. claude-opus-4-6 -> 4.6)
+model_id=$(echo "$input" | jq -r '.model.id // ""')
+short_name=$(echo "$model_id" | sed -n 's/claude-\([a-z]*\)-.*/\1/p' | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
+model_version=$(echo "$model_id" | grep -o '[0-9]-[0-9]' | head -1 | tr '-' '.')
+if [ -n "$short_name" ] && [ -n "$model_version" ]; then
+    model_display="$short_name $model_version"
+elif [ -n "$short_name" ]; then
+    model_display="$short_name"
+else
+    model_display=$(echo "$input" | jq -r '.model.display_name // "Claude"')
+fi
+
+# -- Git branch + dirty status --
+git_display=""
+if [ -n "$current_dir" ]; then
+    cd "$current_dir" 2>/dev/null
+    branch=$(git -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
+    if [ -n "$branch" ]; then
+        dirty_count=$(git -c core.useBuiltinFSMonitor=false status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+        if [ "$dirty_count" -gt 0 ]; then
+            git_display=$(printf "${MAGENTA}%s ${RED}✗%s${RESET}" "$branch" "$dirty_count")
+        else
+            git_display=$(printf "${MAGENTA}%s ${GREEN}✓${RESET}" "$branch")
+        fi
+    fi
+fi
+
+# -- Context usage --
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 context_display=""
 if [ -n "$used_pct" ]; then
-    # Color code based on usage: green < 50%, yellow < 80%, red >= 80%
     context_int=${used_pct%.*}
     if [ "$context_int" -lt 50 ]; then
         context_color="$GREEN"
@@ -30,67 +57,28 @@ if [ -n "$used_pct" ]; then
     else
         context_color="$RED"
     fi
-    context_display=$(printf "${context_color}%.1f%%${RESET}" "$used_pct")
+    context_display=$(printf "${context_color}◐ %d%%${RESET}" "$context_int")
 fi
 
-# Cost information
-total_cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
-lines_added=$(echo "$input" | jq -r '.cost.total_lines_added // empty')
-lines_removed=$(echo "$input" | jq -r '.cost.total_lines_removed // empty')
-
-cost_display=""
-if [ -n "$total_cost" ]; then
-    cost_display=$(printf "${YELLOW}\$%.4f${RESET}" "$total_cost")
-fi
-
-lines_display=""
-if [ -n "$lines_added" ] && [ -n "$lines_removed" ]; then
-    lines_display=$(printf "${GREEN}+%s${RESET}/${RED}-%s${RESET}" "$lines_added" "$lines_removed")
-fi
-
-# Git branch (skip locks for performance)
-git_branch=""
-if [ -n "$current_dir" ] && [ -d "$current_dir/.git" ]; then
-    cd "$current_dir" 2>/dev/null
-    branch=$(git -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
-    if [ -n "$branch" ]; then
-        git_branch=$(printf "${MAGENTA}%s${RESET}" "$branch")
-    fi
-fi
-
-# Build status line
+# -- Build status line --
 status_parts=()
 
-# Model name
-status_parts+=("$(printf "${CYAN}%s${RESET}" "$model")")
-
-# Directory
 if [ -n "$dir_name" ]; then
     status_parts+=("$(printf "${BLUE}%s${RESET}" "$dir_name")")
 fi
 
-# Git branch
-if [ -n "$git_branch" ]; then
-    status_parts+=("$git_branch")
+status_parts+=("$(printf "${CYAN}%s${RESET}" "$model_display")")
+
+if [ -n "$git_display" ]; then
+    status_parts+=("$git_display")
 fi
 
-# Context usage
 if [ -n "$context_display" ]; then
     status_parts+=("$context_display")
 fi
 
-# Cost
-if [ -n "$cost_display" ]; then
-    status_parts+=("$cost_display")
-fi
-
-# Lines changed
-if [ -n "$lines_display" ]; then
-    status_parts+=("$lines_display")
-fi
-
 # Join with separator
-separator=" ${RESET}|${RESET} "
+separator=" ${DIM}|${RESET} "
 output=""
 for i in "${!status_parts[@]}"; do
     if [ $i -eq 0 ]; then

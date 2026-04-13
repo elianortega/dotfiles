@@ -63,7 +63,7 @@ alias f10n="flutter gen-l10n"
 # Export Flutter
 # ----------------------
 export FLUTTER_HOME=~/fvm/default
-PATH=$PATH:$FLUTTER_HOME/bin:$PATH
+PATH=$FLUTTER_HOME/bin:$PATH
 
 # export DART_HOME=~/fvm/default/bin/cache/dart-sdk
 # PATH=$PATH:$DART_HOME/bin:$PATH
@@ -150,6 +150,7 @@ export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
 # ----------------------
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
+unalias gsd 2>/dev/null
 
 # ----------------------
 # Starship Prompt
@@ -162,6 +163,11 @@ eval "$(starship init zsh)"
 ## [/Completion]
 
 export PATH="/Users/elianortega/.shorebird/bin:$PATH"
+
+# ----------------------
+# VPN (Surfshark WireGuard + Tailscale)
+# ----------------------
+alias vpn="$HOME/dotfiles/.dotfiles-personal/vpn/vpn"
 
 # Work Aliases
 

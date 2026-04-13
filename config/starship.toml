@@ -4,7 +4,7 @@
 # Clean two-line format
 format = """
 $directory$git_branch$git_status
-$nodejs$dart$package$character"""
+$nodejs${custom.dart}$package$character"""
 
 # Directory - show last 2 folders
 [directory]
@@ -43,12 +43,23 @@ symbol = "node "
 style = "bold green"
 detect_files = ["package.json", ".nvmrc"]
 
-# Dart/Flutter
+# Dart/Flutter - disabled in favor of custom command
 [dart]
-format = "[$symbol$version]($style) "
+disabled = true
+
+# Custom Dart version that respects FVM
+[custom.dart]
+command = """
+if [ -f .fvmrc ] && command -v fvm >/dev/null 2>&1; then
+  fvm dart --version 2>/dev/null | grep -oE 'Dart SDK version: [0-9]+\\.[0-9]+\\.[0-9]+' | cut -d' ' -f4
+elif command -v dart >/dev/null 2>&1; then
+  dart --version 2>/dev/null | grep -oE 'Dart SDK version: [0-9]+\\.[0-9]+\\.[0-9]+' | cut -d' ' -f4
+fi
+"""
+when = 'test -f pubspec.yaml'
 symbol = "dart "
 style = "bold blue"
-detect_files = ["pubspec.yaml"]
+format = "[$symbol v$output]($style) "
 
 # Package version
 [package]

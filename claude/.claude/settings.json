@@ -53,7 +53,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$HOME/.claude/hooks/gsd-check-update.js\""
+            "command": "node \"/Users/elianortega/.claude/hooks/gsd-check-update.js\""
           }
         ]
       }
@@ -63,7 +63,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$HOME/.claude/hooks/gsd-context-monitor.js\""
+            "command": "node \"/Users/elianortega/.claude/hooks/gsd-context-monitor.js\"",
+            "timeout": 10
+          }
+        ],
+        "matcher": "Bash|Edit|Write|MultiEdit|Agent|Task"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/elianortega/.claude/hooks/gsd-prompt-guard.js\"",
+            "timeout": 5
           }
         ]
       }
@@ -76,6 +90,7 @@
   "enabledPlugins": {
     "supabase@claude-plugins-official": true
   },
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "voiceEnabled": true
 }

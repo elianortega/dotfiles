@@ -17,6 +17,7 @@
 | gh | GitHub CLI |
 | zsh-autosuggestions | Fish-like autosuggestions for zsh |
 | zsh-syntax-highlighting | Syntax highlighting for zsh commands |
+| starship | Cross-shell prompt |
 
 ## Casks
 

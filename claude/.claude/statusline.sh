@@ -34,9 +34,9 @@ fi
 git_display=""
 if [ -n "$current_dir" ]; then
     cd "$current_dir" 2>/dev/null
-    branch=$(git -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
+    branch=$(git --no-optional-locks -c core.useBuiltinFSMonitor=false branch --show-current 2>/dev/null)
     if [ -n "$branch" ]; then
-        dirty_count=$(git -c core.useBuiltinFSMonitor=false status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+        dirty_count=$(git --no-optional-locks -c core.useBuiltinFSMonitor=false status --porcelain 2>/dev/null | wc -l | tr -d ' ')
         if [ "$dirty_count" -gt 0 ]; then
             git_display=$(printf "${MAGENTA}%s ${RED}✗%s${RESET}" "$branch" "$dirty_count")
         else

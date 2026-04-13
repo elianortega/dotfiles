@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# gfr <branch> — fetch a single branch and hard-reset to it
+# Useful in large repos where `git pull` fetches everything
+
+if [[ -z "$1" ]]; then
+  echo "Usage: gfr <branch>"
+  exit 1
+fi
+
+git fetch origin "$1" && git reset --hard "origin/$1"

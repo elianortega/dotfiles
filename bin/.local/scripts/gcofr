@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# gcofr <branch> — checkout a branch, fetch it, and hard-reset to it
+
+if [[ -z "$1" ]]; then
+  echo "Usage: gcofr <branch>"
+  exit 1
+fi
+
+git checkout "$1" && git fetch origin "$1" && git reset --hard "origin/$1"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# gcogl <branch> — checkout a branch and pull
+
+if [[ -z "$1" ]]; then
+  echo "Usage: gcogl <branch>"
+  exit 1
+fi
+
+git checkout "$1" && git pull

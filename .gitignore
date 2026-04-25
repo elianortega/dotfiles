@@ -1,5 +1,7 @@
 node_modules/
 .DS_Store
+__pycache__/
+*.pyc
 
 # Cursor user-specific data
 cursor/User/History/

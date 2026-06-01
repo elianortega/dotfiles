@@ -42,10 +42,22 @@ Located in `~/.claude/skills/`:
 | `presales-proposal-writer` | Generate technical & product proposals for Somnio pre-sales | When creating client-facing technical proposals (Full Development or Product Discovery) | Custom |
 | `humanizer` | Remove signs of AI-generated writing from text | When editing or reviewing text to make it sound natural and human-written | [blader/humanizer](https://github.com/blader/humanizer) |
 | `supabase-postgres-best-practices` | Postgres optimization, indexing, RLS, and schema design | When writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations | [supabase/agent-skills](https://github.com/supabase/agent-skills/tree/main/skills/supabase-postgres-best-practices) |
-| `flutter-dart-skill` | Flutter/Dart layered architecture, BLoC state management, testing, UI patterns, and code style | When writing, reviewing, or architecting any Flutter/Dart code | Custom (built from VGV Engineering practices) |
 | `react-best-practices` | React/Next.js performance optimization -- waterfalls, bundle size, RSC, re-renders, Server Actions (by Vercel Engineering) | When writing, reviewing, or optimizing any React/Next.js code | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) |
 | `nestjs-best-practices` | NestJS architecture, DI, security, performance, testing, DB/ORM, API design, and microservices patterns | When writing, reviewing, or architecting any NestJS backend code | [Kadajett/agent-nestjs-skills](https://github.com/Kadajett/agent-nestjs-skills) |
 | `ui-ux-pro-max` | UI/UX design intelligence -- 67 styles, 161 color palettes, 57 font pairings, 25 charts, 16 tech stacks | When designing, building, or reviewing UI/UX for web or mobile apps | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
+
+---
+
+## Plugins
+
+Installed via `/plugin`. Enabled at user scope (all projects).
+
+| Plugin | Marketplace | Purpose |
+|--------|-------------|---------|
+| `vgv-ai-flutter-plugin` | `very-good-claude-code-marketplace` ([VeryGoodOpenSource](https://github.com/VeryGoodOpenSource/vgv-ai-flutter-plugin)) | All Flutter/Dart best practices (14 `vgv-*` skills: bloc, testing, layered-architecture, material-theming, navigation, i18n, accessibility, animations, static-security, ui-package, create-project, license-compliance, sdk-upgrade, very-good-analysis-upgrade) + post-edit `dart analyze`/`dart format` hooks + Dart & Very Good CLI MCP servers. Replaces the former standalone `flutter-dart-skill`. |
+| `supabase` | `claude-plugins-official` | Supabase database, auth, edge functions, migrations |
+
+Manage with `/plugin` (install/enable/disable), `/reload-plugins` after changes.
 
 ---
 

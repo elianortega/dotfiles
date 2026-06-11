@@ -73,7 +73,7 @@ config.max_fps = 120
 config.animation_fps = 60
 
 -- blinking bar cursor (note: inside tmux/vim the app controls the cursor shape)
-config.default_cursor_style = "BlinkingBar"
+config.default_cursor_style = "BlinkingBlock"
 config.cursor_blink_rate = 500
 config.cursor_blink_ease_in = "EaseOut"
 config.cursor_blink_ease_out = "EaseOut"

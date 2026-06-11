@@ -64,6 +64,37 @@ config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.98
 config.macos_window_background_blur = 10
 
+-- modern look & feel ---------------------------------------------------------
+-- padding + GPU rendering for smooth, ProMotion-friendly scrolling
+config.window_padding = { left = 8, right = 8, top = 8, bottom = 4 }
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+config.max_fps = 120
+config.animation_fps = 60
+
+-- blinking bar cursor (note: inside tmux/vim the app controls the cursor shape)
+config.default_cursor_style = "BlinkingBar"
+config.cursor_blink_rate = 500
+config.cursor_blink_ease_in = "EaseOut"
+config.cursor_blink_ease_out = "EaseOut"
+
+-- font polish: a touch more line-height + contextual ligature features
+-- (MesloLGS has no programming ligatures, so this mainly refines spacing)
+config.line_height = 1.1
+config.harfbuzz_features = { "calt=1", "clig=1", "liga=1" }
+
+-- subtle dimming of inactive panes. NOTE: only affects WezTerm-native splits;
+-- since tmux owns your splits this is a near no-op today (kept for future use).
+config.inactive_pane_hsb = { saturation = 0.9, brightness = 0.7 }
+
+-- clickable links: URLs out of the box + Cmd-click absolute/home file paths
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+table.insert(config.hyperlink_rules, {
+	regex = [[(?:^|[\s"'`(])((?:~|/)[\w./~-]+)]],
+	format = "file://$1",
+})
+-- ---------------------------------------------------------------------------
+
 config.keys = {
 	-- { key = "s", mods = "CMD", action = wezterm.action.SendString("\x13\x54") }, -- Cmd+K sends Ctrl+S followed by S
 	-- New mapping for Ctrl + F (Ctrl + S followed by capital T)

@@ -47,13 +47,14 @@
       "Bash(gh:*)"
     ]
   },
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/elianortega/.claude/hooks/gsd-check-update.js\""
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-check-update.js\""
           }
         ]
       },
@@ -68,14 +69,14 @@
     ],
     "PostToolUse": [
       {
+        "matcher": "Bash|Edit|Write|MultiEdit|Agent|Task",
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/elianortega/.claude/hooks/gsd-context-monitor.js\"",
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-context-monitor.js\"",
             "timeout": 10
           }
-        ],
-        "matcher": "Bash|Edit|Write|MultiEdit|Agent|Task"
+        ]
       },
       {
         "matcher": "Write|Edit",
@@ -83,6 +84,16 @@
           {
             "type": "command",
             "command": "bash /Users/elianortega/.claude/hooks/gsd-phase-boundary.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-read-injection-scanner.js\"",
             "timeout": 5
           }
         ]
@@ -94,7 +105,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/elianortega/.claude/hooks/gsd-prompt-guard.js\"",
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-prompt-guard.js\"",
             "timeout": 5
           }
         ]
@@ -104,7 +115,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/elianortega/.claude/hooks/gsd-read-guard.js\"",
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-read-guard.js\"",
             "timeout": 5
           }
         ]
@@ -114,7 +125,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/Users/elianortega/.claude/hooks/gsd-workflow-guard.js\"",
+            "command": "\"/Users/elianortega/.nvm/versions/node/v22.22.1/bin/node\" \"/Users/elianortega/.claude/hooks/gsd-workflow-guard.js\"",
             "timeout": 5
           }
         ]
@@ -136,9 +147,20 @@
     "command": "bash ~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "supabase@claude-plugins-official": true
+    "supabase@claude-plugins-official": true,
+    "vgv-ai-flutter-plugin@very-good-claude-code-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "very-good-claude-code-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "VeryGoodOpenSource/very_good_claude_marketplace"
+      }
+    }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "voiceEnabled": true
 }

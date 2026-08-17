@@ -171,6 +171,11 @@ alias vpn="$HOME/dotfiles/.dotfiles-personal/vpn/vpn"
 
 # Work Aliases
 
+# Somnio work account. Separate config dir means a separate Keychain entry
+# (Claude Code-credentials-<sha256 of this path>), so both accounts stay logged
+# in at once. Tooling is symlinked from ~/.claude; auth/history/projects are not.
+alias claudew='CLAUDE_CONFIG_DIR="$HOME/.claude-work" claude'
+
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 

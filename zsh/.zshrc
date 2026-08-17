@@ -173,3 +173,6 @@ alias vpn="$HOME/dotfiles/.dotfiles-personal/vpn/vpn"
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# shipmate credential vault (set up once, reused by every shipmate project)
+[ -f ~/.shipmate/secrets/env.sh ] && source ~/.shipmate/secrets/env.sh

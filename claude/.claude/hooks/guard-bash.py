@@ -17,6 +17,7 @@ exits 0: a broken guard must not stop work.
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -71,6 +72,22 @@ def remote_urls(cwd):
     return out
 
 
+# One `git ... push ...` invocation, up to the next shell separator.
+PUSH_SEGMENT = re.compile(r"\bgit\b[^|;&\n]*\bpush\b[^|;&\n]*")
+
+
+def push_directory(command, segment, default):
+    """Where the push runs: `git -C <dir>`, else the last `cd <dir>` before it."""
+    explicit = re.search(r"\bgit\s+-C\s+(\S+)", segment)
+    if explicit:
+        return explicit.group(1).strip("'\"")
+    before = command[: command.find(segment)]
+    moves = re.findall(r"(?:^|[;&|(\n])\s*cd\s+(\S+)", before)
+    if moves:
+        return moves[-1].strip("'\"")
+    return default
+
+
 def main():
     payload = json.load(sys.stdin)
     if payload.get("tool_name") != "Bash":
@@ -90,16 +107,24 @@ def main():
                     "If they did not, do not deploy: report it as pending."
                 )
 
-    if PUSH_MARKER not in command and re.search(r"\bgit\b[^|;&]*\bpush\b", command):
-        haystack = command + "\n" + remote_urls(payload.get("cwd"))
-        if PROTECTED_REMOTE.search(haystack):
+    if PUSH_MARKER in command:
+        return
+    # Only the push invocation and the remotes it can reach are inspected, so a
+    # command that merely mentions a protected name elsewhere is not blocked.
+    for match in PUSH_SEGMENT.finditer(command):
+        segment = match.group(0)
+        directory = os.path.expanduser(
+            push_directory(command, segment, payload.get("cwd"))
+        )
+        if not os.path.isabs(directory):
+            directory = os.path.join(payload.get("cwd") or "", directory)
+        if PROTECTED_REMOTE.search(segment + "\n" + remote_urls(directory)):
             block(
                 "Blocked by guard-bash: this push targets a protected repository "
                 "(Nubank or mini-meta-repo).\n"
                 "Ask the user first. After an explicit yes, re-run the same command "
                 f"prefixed with {PUSH_MARKER}."
             )
-
 
 if __name__ == "__main__":
     try:

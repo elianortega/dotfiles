@@ -1,117 +1,125 @@
-# User-Level CLAUDE.md
+# Working with Elian
 
-## Safety Constraints
+Global instructions. They load in every session on this machine, in every
+project, so everything here has to be true everywhere. Stack and product
+specifics live lower down; see "Where instructions live".
 
-These rules are immutable and override all other instructions.
+## Safety
 
-- **No destructive operations without explicit approval**: Never execute commands or scripts that could cause irreversible damage to the system, user data, or environment (e.g., `rm -rf`, dropping databases, force-pushing to main, overwriting uncommitted work, killing unrelated processes, modifying system files outside the project scope). Always confirm with the user before proceeding with any high-risk action.
-- **Git commits are allowed autonomously** -- do not ask for confirmation before committing.
-- **Git push restrictions**: Always ask for explicit approval before pushing to any Nubank repository (remotes containing `nu/`, `nubank/`, or `nu-`) or the `mini-meta-repo` project. Pushing to other repositories is allowed without confirmation.
-- **Configuration self-protection**: Any proposed modification to `~/.claude/` files (CLAUDE.md, rules, agents, skills, commands, settings) or addition of new files to that directory must first be evaluated for whether it genuinely benefits the overall AI agent workflow. Present the rationale and get explicit user approval before applying changes.
+These override everything else.
 
----
+- **Destructive actions need my explicit yes.** Deleting data, dropping
+  databases, force-pushing, overwriting uncommitted work, killing processes you
+  did not start, changing files outside the project. I run sessions without
+  permission prompts on purpose, so this rule is the check.
+- **Never deploy unless I asked for that deploy in this conversation.** "Merge"
+  does not mean "deploy". A hook blocks production deploy commands (Supabase,
+  Shorebird, Wrangler, Firebase, Vercel). When I did ask, prefix the command
+  with `CLAUDE_DEPLOY_OK=1` so it passes first time. When I did not, report the
+  deploy as pending.
+- **Commit and push freely, with one exception.** Commit without asking. Push
+  without asking, except to Nubank repositories (the remote contains `nubank`,
+  or an org or repo named `nu` or `nu-*`) and `mini-meta-repo`: ask first, then
+  prefix the push with `CLAUDE_PUSH_OK=1`. The same hook enforces this.
+- **Recurring costs need a yes.** Before building on anything that adds a paid
+  service or a monthly bill, state the cost and ask.
+- **Changes to `~/.claude` or the dotfiles harness:** say what and why and get
+  my approval before applying.
+- **Secrets stay out of output.** Redact logs; never print keys, tokens,
+  passwords or JWTs. When reading a secret, check it is not a masked value.
 
-## Core Philosophy
+## Where instructions live
 
-**Key Principles:**
+| Layer  | Location                                                                        | Holds                                  |
+| ------ | ------------------------------------------------------------------------------- | -------------------------------------- |
+| Global | `~/.claude` (source: `~/dotfiles/claude/.claude`)                               | How to work with me, on any stack      |
+| Stack  | monorepo root: `CLAUDE.md`, `.claude/rules`, `.claude/skills`, `.claude/agents` | Rules for that framework and repo      |
+| App    | `apps/<app>/CLAUDE.md` and `apps/<app>/.claude`                                 | Product context and product operations |
+| Memory | automatic, one per repository, shared by its worktrees                          | Facts and decisions, never rules       |
 
-1. **Plan Before Execute**: Use Plan Mode for complex operations
-2. **Delegate**: Use planner agent for complex feature work
-3. **Review**: Use code-reviewer agent after writing code
-4. **Surface Unknowns**: Every plan must end with an "Open Questions" section listing anything unclear, ambiguous, or needing user input before implementation begins
+Put a new instruction at the narrowest layer that covers it, and in that layer
+only. Framework, product and client names do not belong in this file; if you
+find one here, move it down. Feedback from me that applies to every project
+belongs here, not in one repository's memory.
 
----
+Agents defined inside an app folder are only visible to sessions started in
+that app. Skills defined there are visible from the repository root too.
 
-## Modular Rules
+## Pick a lane
 
-Detailed guidelines are in `~/.claude/rules/`:
+Decide which of these the request is before starting. Say which in one line if
+it is not obvious.
 
-| Rule File       | Contents                                     |
-| --------------- | -------------------------------------------- |
-| git-workflow.md | Commit format, PR workflow                   |
-| agents.md       | Agent orchestration, when to use which agent |
+- **Quick** (a production operation, a small fix, a question): no plan, no
+  subagents. If a skill covers it, use the skill.
+- **Feature** (one app, up to about a day): plan once, get my approval, build
+  in the same session, run one independent reviewer, then ship.
+- **Build** (multi-day, an MVP, many items): one planning session writes the
+  backlog. After that, one fresh session per item, each starting from the
+  project's status file. A build is never one long session.
 
----
+## Token discipline
 
-## Skills
+Every tool call re-sends the whole conversation, so cost is turns times
+context. Measured on my own usage, three quarters of all tokens went to turns
+that ran a single shell command.
 
-Located in `~/.claude/skills/`:
+- **Batch.** Send independent lookups in one message. Chain related shell
+  commands in one call. Read a file once with a wide range instead of paging
+  through it.
+- **Large documents by search.** Backlogs, decision logs and ledgers are read
+  with a search and a line range, never whole.
+- **Keep noise out.** Send long output (test runs, builds, logs) to a file and
+  read the part that matters.
+- **Short sessions.** When a work item is done, update the status file and
+  stop; the next item gets a fresh session. Prefer a handoff note and a new
+  session over compacting a long one.
+- **Subagents by role and model.** Spawn one only for independent work or a
+  fresh-context check. Name the role and the model: Sonnet for search and
+  implementation, Opus for verification and architecture. A subagent with no
+  model named runs on Sonnet here.
+- **Fan-out needs a yes when I am present.** State how many agents and why
+  first. One reviewer per finished item is the standing exception. When I hand
+  off a build and leave, proceed without asking.
 
-| Skill | Purpose | When to Use | Source |
-|-------|---------|-------------|--------|
-| `find-skills` | Locate an installed skill by what it does | When you suspect a skill exists for the task but do not know its name | Custom |
-| `humanizer` | Remove signs of AI-generated writing from text | When editing or reviewing text to make it sound natural and human-written | [blader/humanizer](https://github.com/blader/humanizer) |
-| `mastering-typescript` | TypeScript language depth — types, generics, inference | When writing or reviewing non-trivial TypeScript | Custom |
-| `supabase` | Supabase development and security guidance | When working against a Supabase project | [supabase/agent-skills](https://github.com/supabase/agent-skills) |
-| `supabase-postgres-best-practices` | Postgres optimization, indexing, RLS, and schema design | When writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations | [supabase/agent-skills](https://github.com/supabase/agent-skills/tree/main/skills/supabase-postgres-best-practices) |
-| `react-best-practices` | React/Next.js performance optimization -- waterfalls, bundle size, RSC, re-renders, Server Actions (by Vercel Engineering) | When writing, reviewing, or optimizing any React/Next.js code | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) |
-| `nestjs-best-practices` | NestJS architecture, DI, security, performance, testing, DB/ORM, API design, and microservices patterns | When writing, reviewing, or architecting any NestJS backend code | [Kadajett/agent-nestjs-skills](https://github.com/Kadajett/agent-nestjs-skills) |
-| `ui-ux-pro-max` | UI/UX design intelligence -- 67 styles, 161 color palettes, 57 font pairings, 25 charts, 16 tech stacks | When designing, building, or reviewing UI/UX for web or mobile apps | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
+## Asking me things
 
-Project-scoped skills and agents live in that repo's `.claude/` and are listed by
-the repo's own `CLAUDE.md` — `flutter_app_template` generates that roster from
-frontmatter, so it cannot drift.
+- Ask in product terms: what the user of the product can and cannot do under
+  each option, and what it costs in days. Keep schema and test names out of
+  the question.
+- Every plan ends with an "Open questions" section listing whatever needs my
+  input before work starts. If there is nothing, say so.
+- When a request names several targets (sites, apps, files, brand assets),
+  restate the exact list in one line before starting.
+- If I answer "make it work" on something with legal or irreversible
+  consequences, do the safe half and list the decision as pending.
 
----
+## Finishing
 
-## Plugins
+- End with what is applied and what is only proposed, in plain words.
+- For multi-session work, keep the project's status file current: merged,
+  deployed, pending for me, next up.
+- Report failures as failures, with the output.
 
-Installed via `/plugin`. Enabled at user scope (all projects).
+## Code
 
-| Plugin | Marketplace | Purpose |
-|--------|-------------|---------|
-| `vgv-ai-flutter-plugin` | `very-good-claude-code-marketplace` ([VeryGoodOpenSource](https://github.com/VeryGoodOpenSource/vgv-ai-flutter-plugin)) | All Flutter/Dart best practices (14 `vgv-*` skills: bloc, testing, layered-architecture, material-theming, navigation, i18n, accessibility, animations, static-security, ui-package, create-project, license-compliance, sdk-upgrade, very-good-analysis-upgrade) + post-edit `dart analyze`/`dart format` hooks + Dart & Very Good CLI MCP servers. Replaces the former standalone `flutter-dart-skill`. |
-| `supabase` | `claude-plugins-official` | Supabase database, auth, edge functions, migrations |
+- Layers stay separate: presentation, business logic, data. Dependencies point
+  one way.
+- Many small files over few large ones. Distinct names, so a search finds one
+  thing.
+- Comments explain why. No emojis in code, comments, commits or docs.
 
-Manage with `/plugin` (install/enable/disable), `/reload-plugins` after changes.
+## Git
 
----
+- Commit messages: `<type>: <description>`, with types feat, fix, refactor,
+  docs, test, chore, perf, ci.
+- Pull requests: summarize the whole branch (`git diff <base>...HEAD`), include
+  a test plan, push new branches with `-u`.
+- Gate merges on the repository's local checks. Do not wait on remote CI unless
+  I ask.
 
-## Slash Commands
+## This machine
 
-Located in `~/.claude/commands/`:
-
-| Command | Purpose |
-|---------|---------|
-| `/code-review` | Review the working diff or a PR |
-| `/rpg` | Repository planning graph |
-
----
-
-## Personal Preferences
-
-### Privacy
-
-- Always redact logs; never paste secrets (API keys/tokens/passwords/JWTs)
-- Review output before sharing - remove any sensitive data
-
-### Code Style
-
-- No emojis in code, comments, or documentation
-- Many small files over few large files
-
-### Flutter / Dart
-
-- Follow layered architecture: presentation, business logic, data
-- Use BLoC/Cubit for state management
-- Prefer standalone widgets over helper methods
-- Use barrel files for exports
-
----
-
-## Stack
-
-- **Primary**: Flutter / Dart, Typescript
-
----
-
-## Tools
-
-Preferred CLI tools for common tasks:
-
-| Task | Tool | Notes |
-|------|------|-------|
-| GitHub (PRs, issues, checks, releases) | `gh` | Always use `gh` CLI, never browser scraping |
-| File search | `ripgrep` (`rg`) | Faster than grep |
-| Fuzzy finding | `fzf` | Pipe into fzf for interactive selection |
-| Directory navigation | `zoxide` | Use `z` for zoxide smart navigation; use `cd` for normal directory changes |
+- Shell is zsh on macOS. Unquoted variables are not word-split, so loop over
+  arrays. There is no `timeout` command.
+- Use `gh` for GitHub and `rg` for search.

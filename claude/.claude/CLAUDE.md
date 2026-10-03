@@ -39,12 +39,18 @@ Located in `~/.claude/skills/`:
 
 | Skill | Purpose | When to Use | Source |
 |-------|---------|-------------|--------|
-| `presales-proposal-writer` | Generate technical & product proposals for Somnio pre-sales | When creating client-facing technical proposals (Full Development or Product Discovery) | Custom |
+| `find-skills` | Locate an installed skill by what it does | When you suspect a skill exists for the task but do not know its name | Custom |
 | `humanizer` | Remove signs of AI-generated writing from text | When editing or reviewing text to make it sound natural and human-written | [blader/humanizer](https://github.com/blader/humanizer) |
+| `mastering-typescript` | TypeScript language depth — types, generics, inference | When writing or reviewing non-trivial TypeScript | Custom |
+| `supabase` | Supabase development and security guidance | When working against a Supabase project | [supabase/agent-skills](https://github.com/supabase/agent-skills) |
 | `supabase-postgres-best-practices` | Postgres optimization, indexing, RLS, and schema design | When writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations | [supabase/agent-skills](https://github.com/supabase/agent-skills/tree/main/skills/supabase-postgres-best-practices) |
 | `react-best-practices` | React/Next.js performance optimization -- waterfalls, bundle size, RSC, re-renders, Server Actions (by Vercel Engineering) | When writing, reviewing, or optimizing any React/Next.js code | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) |
 | `nestjs-best-practices` | NestJS architecture, DI, security, performance, testing, DB/ORM, API design, and microservices patterns | When writing, reviewing, or architecting any NestJS backend code | [Kadajett/agent-nestjs-skills](https://github.com/Kadajett/agent-nestjs-skills) |
 | `ui-ux-pro-max` | UI/UX design intelligence -- 67 styles, 161 color palettes, 57 font pairings, 25 charts, 16 tech stacks | When designing, building, or reviewing UI/UX for web or mobile apps | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
+
+Project-scoped skills and agents live in that repo's `.claude/` and are listed by
+the repo's own `CLAUDE.md` — `flutter_app_template` generates that roster from
+frontmatter, so it cannot drift.
 
 ---
 
@@ -65,12 +71,10 @@ Manage with `/plugin` (install/enable/disable), `/reload-plugins` after changes.
 
 Located in `~/.claude/commands/`:
 
-| Command       | Purpose                                            |
-| ------------- | -------------------------------------------------- |
-| skill-i       | Install a skill into the current project           |
-| skill-i-g     | Install a skill globally (dotfiles, git-tracked)   |
-| skill-d       | Remove a skill from the current project            |
-| skill-d-g     | Remove a skill from dotfiles (globally tracked)    |
+| Command | Purpose |
+|---------|---------|
+| `/code-review` | Review the working diff or a PR |
+| `/rpg` | Repository planning graph |
 
 ---
 

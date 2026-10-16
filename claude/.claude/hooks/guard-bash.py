@@ -43,6 +43,19 @@ DEPLOY_PATTERNS = [
     (r"wrangler\s+(?:pages\s+)?deploy\b", "wrangler deploy"),
     (r"firebase\s+deploy\b", "firebase deploy"),
     (r"vercel\b[^;&|\n]*--prod\b", "vercel --prod"),
+    # Package scripts hide the deploy tool from this guard (a client's
+    # `pnpm run deploy` runs wrangler inside it), so the script names count too.
+    # The leading whitespace keeps `preflight:deploy` from matching.
+    (
+        r"(?:pnpm|npm|yarn)\b[^;&|\n]*\s(?:run\s+)?deploy(?::client)?(?=\s|$|[;&|)])",
+        "package deploy script",
+    ),
+    (r"tsx\s+\S*scripts/deploy\.ts\b", "scripts/deploy.ts"),
+    (
+        r"(?:(?:pnpm|npm|yarn)\b[^;&|\n]*\s|tsx\s+\S*)"
+        r"(?:client:gsc-setup|gsc-setup\.ts)\b(?![^;&|\n]*--no-deploy)",
+        "gsc-setup (redeploys unless --no-deploy)",
+    ),
 ]
 
 # Rehearsals and local stacks are not deploys.

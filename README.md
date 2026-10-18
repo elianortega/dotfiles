@@ -125,3 +125,19 @@ Wait for plugins to install, then restart nvim.
 | `<leader>e` | File explorer |
 
 **Note:** Actual keybindings depend on your nvim config. Run `:map` to see all mappings or check your nvim repo.
+
+### Development secrets (evault)
+
+Secrets live in an encrypted private repo managed by the `evault` CLI
+(github.com/elianortega/evault). The only key is the 1Password item
+"evault age key" (Private vault).
+
+```bash
+git clone git@github.com:elianortega/evault.git ~/development/evault
+~/development/evault/install.sh
+# 1Password app: Settings > Developer > Integrate with 1Password CLI
+evault setup git@github.com:elianortega/evault-data.git
+```
+
+The `evault` skill (`claude/.claude/skills/evault`) tells AI sessions how to
+store and use secrets; the global CLAUDE.md requires it.

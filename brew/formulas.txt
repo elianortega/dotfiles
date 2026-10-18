@@ -19,3 +19,4 @@ gh
 zsh-autosuggestions
 zsh-syntax-highlighting
 starship
+age

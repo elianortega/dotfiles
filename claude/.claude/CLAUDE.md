@@ -27,11 +27,12 @@ These override everything else.
   my approval before applying.
 - **Secrets stay out of output.** Redact logs; never print keys, tokens,
   passwords or JWTs. When reading a secret, check it is not a masked value.
-- **Every secret goes into evault.** When a session creates, receives or
-  rotates a credential (token, key, password, database URL, keystore, key
-  file), save and document it with the `evault` skill before using it, and
-  mark exposed ones for rotation. Project `.env` files are generated from
-  evault, never the only copy.
+- **Every secret is backed up in evault.** Projects keep and read their own
+  local copy (`.env.local`, key files); evault is the global backup. When a
+  session creates, receives or rotates a credential (token, key, password,
+  database URL, keystore, key file), write the local copy and also save and
+  document it with the `evault` skill. Read from evault only to restore a
+  missing local copy. Mark exposed secrets for rotation.
 
 ## Where instructions live
 

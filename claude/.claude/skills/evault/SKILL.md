@@ -1,106 +1,100 @@
 ---
 name: evault
 description: |
-  Store, find and use development secrets with the evault CLI: API keys, tokens,
-  passwords, database URLs, .env values, signing keystores, Apple .p8 keys,
-  service-account JSON, any credential file. Use whenever a secret is created,
-  received, rotated, needed for a build or a .env file, or looked for ("where is
-  the X key", "what was the value of", "set up .env.local", "upload keystore",
-  "save this token"). Also use when a secret was exposed and needs a rotation note.
+  Back up, document, find and restore development secrets with the evault CLI:
+  API keys, tokens, passwords, database URLs, .env values, signing keystores,
+  Apple .p8 keys, service-account JSON, any credential file. Use whenever a
+  secret is created, received, rotated or referenced in a project ("save this
+  token", "add the key to .env", "new keystore"), when a local copy is missing
+  ("set up .env.local on this worktree", "where is the upload keystore", "what
+  was the value of"), when a secret was exposed, and to audit what needs rotating.
 ---
 
 # evault
 
-Every development secret lives in the evault data repo (`evault path`, normally
-`~/evault`), one folder per project, each value encrypted, each documented in
-the project's README. The vault is the source of truth; project `.env` files
-are copies generated from it.
+evault is the global backup of every development secret: one encrypted folder
+per project (`evault path`, normally `~/evault`), each item documented in that
+project's README, pushed to a private repo. Format reference: `docs/format.md`
+in the CLI repo (`$(dirname $(dirname $(readlink -f $(command -v evault))))/docs/format.md`).
 
-Format reference (folders, README fields): `docs/format.md` in the evault CLI
-repo (`$(dirname $(dirname $(readlink -f $(command -v evault))))/docs/format.md`).
+## The model: local copy for work, evault for backup
+
+- Each project keeps its own working copy wherever it reads it: `.env.local`,
+  `android/key.properties`, the keystore in `android/app/`, a key file in a
+  gitignored folder. Builds, scripts and sessions read that local copy.
+- evault holds a backup of the same value, plus the context: what it is,
+  where the copies live, when it expires, how to replace it.
+- Do not read from evault while a local copy exists. Reading needs Touch ID,
+  and the local copy is what the project uses.
+- Read from evault only to restore a missing local copy (new machine, fresh
+  worktree, deleted file), then work from the restored copy.
+
+## When a secret appears in a project (new, received, or rotated)
+
+Do all three, in this order:
+
+1. **Local copy**: put it where the project reads it (the gitignored env file,
+   key.properties, the key file path the config expects). Never commit it.
+2. **Backup**: save the same value to evault.
+   ```sh
+   evault set <project> <ENV_NAME>                     # user copied it: reads the clipboard, clears it
+   <command printing the value> | evault set <project> <ENV_NAME> --stdin   # value you generated
+   evault add <project> <path> [--name <file-name>]    # a file (keystore, .p8, JSON key)
+   evault import <project> <env-file>                  # every KEY=value of a local env file
+   ```
+   Use the exact env var name the project reads. Replacing a value needs `--force`.
+   If the project already has secrets that are not in evault, back them up too:
+   `evault compare <project> <env-file>` shows what is missing.
+3. **Document** every field of the new item. Saving creates TODO fields:
+   ```sh
+   evault meta <project> <name> what "Cloudflare R2 token for the media bucket"
+   evault meta <project> <name> used-in "apps/web/.env.local; Vercel env (production)"   # every copy
+   evault meta <project> <name> created 2026-10-16
+   evault meta <project> <name> expires never            # or YYYY-MM-DD
+   evault meta <project> <name> scope "R2 read+write, bucket media only"
+   evault meta <project> <name> recoverable "no: shown once at creation"
+   evault meta <project> <name> rotate "Cloudflare > R2 > API tokens > roll; update Vercel env"
+   evault meta <project> <name> status ok                # ok | rotate | exposed | revoked
+   evault meta <project> <name> notes "token id ...; account id ..."   # non-secret only
+   ```
+   Facts only: write `unknown` when nobody knows, and add ` (unverified)` to a guess.
+
+Then `evault sync "<type>: <what changed>"` to push the backup.
+
+Project names are lowercase with dashes. Credentials that belong to an account
+used by several projects (Apple team keys, Play service account, Cloudflare
+account token) go in `shared/<service>`; the project README links to them.
+
+## Restore a missing local copy
+
+```sh
+evault ls <project>                                  # what exists (no unlock)
+evault show <project>                                # context: used-in says where each copy goes
+evault env <project> --out .env.local [--only A,B]   # mode 600; refuses to overwrite without --force
+evault get <project> <file-name> --to android/app/   # a file, mode 600
+evault get <project> <ENV_NAME>                      # one value to the clipboard for the user (clears in 45s)
+```
+
+Before overwriting an existing local file, run `evault compare` and back up
+anything that exists only locally.
 
 ## Never leak a value
 
 - Never pass `--stdout` to `get` or `env` when the output reaches your
-  transcript. Use the clipboard (`evault get`), a file (`evault get --to`,
-  `evault env --out`), or `evault exec <project> -- <cmd>`.
-- Never `cat`, `echo` or `grep` a decrypted file or an `.env` file. To see which
-  names a file holds: `sed -E 's/=.*/=<redacted>/' FILE`.
-- To compare a project's `.env` with the vault: `evault compare <project> FILE`.
+  transcript. Restore to files or the clipboard instead.
+- Never `cat`, `echo`, `grep`, `sed` or `jq` a secret file. To see which names
+  a file holds: `evault names <file>`. To compare: `evault compare`.
 - Never put a value in a command line, commit message, README field or chat.
+- If a value was exposed (pasted in chat, screenshot, log, commit, or printed
+  by a tool), set `status exposed`, say how in `notes`, and tell the user.
 
-## Find something
-
-```sh
-evault ls                    # projects
-evault ls <project>          # items: kind, status, expiry, what
-evault show <project>        # full README: context for every item
-evault check                 # undocumented items, rotation flags, expiry within 30 days
-```
-
-Project names are lowercase with dashes; account-level credentials used by
-several projects live in `shared/<service>`. Look there too.
-
-## Save a secret
-
-When you create a credential, generate one (a session secret, a password), or
-the user gives you one, store it before doing anything else with it.
+## Audit
 
 ```sh
-# A value: ask the user to copy it, then (reads the clipboard, never prints, clears it)
-evault set <project> <ENV_NAME>
-# A value you generated in a script, piped without echoing it:
-<command that prints the value> | evault set <project> <ENV_NAME> --stdin
-# A file (keystore, .p8, JSON key):
-evault add <project> <path> [--name <file-name>]
-# A whole .env file (keeps existing values; reports differences):
-evault import <project> <env-file>
+evault audit                 # act now (exposed, expired), soon (rotation, expiring, over a year old), missing facts, backup state
+evault audit <project>       # every finding for one project
+evault check                 # documentation completeness only
 ```
 
-Use the exact env var name the project reads. Replacing a value needs `--force`.
-
-## Document it (required, right after saving)
-
-`set`, `add` and `import` create a README section with TODO fields. Fill every
-one, with facts, not guesses (write `unknown` if nobody knows):
-
-```sh
-evault meta <project> <name> what "Cloudflare R2 token for the media bucket"
-evault meta <project> <name> used-in "apps/web/.env.local; Vercel env (production)"
-evault meta <project> <name> created 2026-10-16
-evault meta <project> <name> expires never            # or YYYY-MM-DD
-evault meta <project> <name> scope "R2 read+write, bucket media only"
-evault meta <project> <name> recoverable "no: shown once at creation"
-evault meta <project> <name> rotate "Cloudflare > R2 > API tokens > roll; update Vercel env"
-evault meta <project> <name> status ok                # ok | rotate | exposed | revoked
-evault meta <project> <name> notes "token id abc...; account id ..."   # non-secret only
-```
-
-If a value was exposed (pasted in a chat, shown in a screenshot, logged, or
-committed), set `status exposed` and say how in `notes`, then tell the user it
-needs rotating.
-
-Also keep the project's opening paragraph in `<project>/README.md` current:
-what the project is, where it runs, which accounts own its keys.
-
-## Use a secret
-
-```sh
-evault env <project> --out .env.local [--only A,B]   # mode 600; refuses to overwrite without --force
-evault get <project> <file-name> --to android/app/   # decrypt a file, mode 600
-evault exec <project> [--only A,B] -- <command>      # run with values in the environment
-evault get <project> <ENV_NAME>                      # to the clipboard for the user, clears in 45s
-```
-
-Before overwriting an existing `.env`, run `evault compare` and import anything
-that exists only in the file.
-
-## Finish
-
-```sh
-evault check <project>     # nothing left as TODO
-evault sync "<type>: <what changed>"   # commit and push the encrypted repo
-```
-
-Reading needs Touch ID through 1Password. If `op` fails, ask the user to unlock
-1Password; do not look for the key anywhere else. Saving never needs it.
+Audit reads metadata only: no Touch ID. Report its findings to the user; do not
+rotate anything without being asked.

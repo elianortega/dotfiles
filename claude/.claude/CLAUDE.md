@@ -87,6 +87,11 @@ that ran a single shell command.
 - **Fan-out needs a yes when I am present.** State how many agents and why
   first. One reviewer per finished item is the standing exception. When I hand
   off a build and leave, proceed without asking.
+- **Subagents check only their own change.** A builder runs format and lint on
+  the files it changed, typecheck, its own tests and the cheap guards. Never the
+  full suite, full verify, build or e2e. The orchestrator runs those once, after
+  the wave is merged into main or an integration branch, and only where the
+  merged change can affect them. This beats any START prompt that says otherwise.
 
 ## Asking me things
 

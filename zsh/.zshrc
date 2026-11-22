@@ -181,3 +181,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # shipmate credential vault (set up once, reused by every shipmate project)
 [ -f ~/.shipmate/secrets/env.sh ] && source ~/.shipmate/secrets/env.sh
+
+# direnv: per-folder environment (.envrc), e.g. a project-scoped Supabase token.
+# Kept last so it wraps every prompt hook added above.
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"

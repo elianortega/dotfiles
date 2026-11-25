@@ -134,3 +134,9 @@ that ran a single shell command.
 - Shell is zsh on macOS. Unquoted variables are not word-split, so loop over
   arrays. There is no `timeout` command.
 - Use `gh` for GitHub and `rg` for search.
+
+## Multi-agent runs
+
+- A failed review never stalls a chain. Reviewers split real defects (block)
+  from judgment calls (merge, I settle later). A blocked item gets up to four
+  fix rounds; if it is still stuck, tell me during the run, never only at the end.
